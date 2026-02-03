@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS medihome_db;
+CREATE DATABASE medihome_db;
