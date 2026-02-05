@@ -23,6 +23,13 @@ Medication.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        category: {
+            type: DataTypes.STRING,
+            defaultValue: 'Prescription',
+            validate: {
+                isIn: [['Prescription', 'Over-the-Counter', 'Supplement/Vitamin']],
+            },
+        },
         user_id: {
             type: DataTypes.INTEGER, 
             references: {
