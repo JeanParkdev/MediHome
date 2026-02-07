@@ -2,10 +2,14 @@ const User = require('./User');
 const Medication = require('./Medication');
 const Doctor = require('./Doctor');
 const Allergy = require('./Allergy');
-
+const Appointment = require('./Appointment');
 
 //Relationships
 User.hasMany(Medication, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE',
+});
+User.hasMany(Appointment, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE',
 });
@@ -28,4 +32,8 @@ Doctor.belongsTo(User, {
 Allergy.belongsTo(User, {
     foreignKey: 'user_id',
 });
-module.exports = { User, Medication, Doctor, Allergy };
+Appointment.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+module.exports = { User, Medication, Doctor, Allergy, Appointment };

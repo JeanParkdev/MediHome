@@ -4,21 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <header>
-    <h1>MediHome 🏥: Your Health Hub</h1>
-    <nav>
-      <a href="/">Home</a>
-    </nav>
-  </header>
+<body class="bg-gray-50 text-gray-900">
+ <nav class="bg-white border-b border-gray-200 px-4 py-2.5 shadow-sm">
+    <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <a href="/" class="flex items-center gap-2">
+            <span class="text-3xl"></span> 
+            <span class="self-center text-2xl font-bold whitespace-nowrap text-blue-600 tracking-tight">MediHome</span>
+        </a>
+        
+        <div class="flex items-center lg:order-2">
+            {{#if logged_in}}
+                <a href="/dashboard" class="text-gray-600 hover:text-blue-600 font-medium text-sm px-4 py-2 mr-2">Dashboard</a>
+                <button id="logout" class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-4 py-2 transition-colors">Logout</button>
+            {{else}}
+                <a href="/login" class="text-gray-600 hover:text-blue-600 font-medium text-sm px-4 py-2 mr-2">Log in</a>
+                <a href="/signup" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2 transition-colors">Get Started</a>
+            {{/if}}
+        </div>
+    </div>
+</nav>
 
-  <main>
+  <main class="max-w-screen-xl mx-auto p-4 mt-6">
     {{{ body }}} </main>
 
-  <footer>
-    <p>&copy; 2026 MediHome Team | Jean Park </p>
+  <footer class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+      <hr class= "my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-brand text-center">MediHome</span> 
+    <p class="text-sm text-gray-500 text-center">Your Family's health, safe and sound. </p>
   </footer>
 </body>
 </html>

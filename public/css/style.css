@@ -1,0 +1,9 @@
+:root {
+    --medihome-blue: #2563eb
+}
+.text-brand {
+    color: var(--medihome-blue);
+}   
+.bg-brand {
+    background-color: var(--medihome-blue);
+}
