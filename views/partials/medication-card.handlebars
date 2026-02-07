@@ -1,0 +1,30 @@
+<div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow h-full flex flex-col justify-between">
+    
+    <div class="w-full">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <h3 class="text-lg font-bold text-gray-800 break-words max-w-[70%]">{{name}}</h3>
+            
+            {{#if (eq category "Prescription")}}
+                <span class="bg-blue-100 text-blue-800 text-[10px] uppercase font-bold px-2 py-0.5 rounded">RX</span>
+            {{else if (eq category "Over-the-Counter")}}
+                <span class="bg-green-100 text-green-800 text-[10px] uppercase font-bold px-2 py-0.5 rounded">OTC</span>
+            {{else}}
+                <span class="bg-yellow-100 text-yellow-800 text-[10px] uppercase font-bold px-2 py-0.5 rounded">Vit</span>
+            {{/if}}
+        </div>
+
+        <div class="text-sm text-gray-600 space-y-1">
+            <p><span class="font-semibold text-gray-400 uppercase text-[10px] tracking-wider">Dosage:</span> {{dosage}}</p>
+            <p><span class="font-semibold text-gray-400 uppercase text-[10px] tracking-wider">Frequency:</span> {{frequency}}</p>
+        </div>
+    </div>
+
+    <div class="flex justify-end mt-4 pt-3 border-t border-gray-50">
+        <button class="delete-med text-red-400 hover:text-red-600 flex items-center gap-1 text-xs font-medium transition-colors" data-id="{{id}}">
+            <svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+            Remove
+        </button>
+    </div>
+</div>
