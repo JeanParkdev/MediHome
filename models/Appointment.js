@@ -16,13 +16,21 @@ Appointment.init(
             allowNull: false,
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+        },
+        time: {
+            type: DataTypes.TIME,
             allowNull: false,
         },
         type: {
             type: DataTypes.STRING,
             allowNull: false,
         },  
+        reason: {
+            type: DataTypes.STRING,
+            allowNull: true, 
+        },
         user_id: {
             type: DataTypes.INTEGER,
             references: {

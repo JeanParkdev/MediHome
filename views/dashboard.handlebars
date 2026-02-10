@@ -10,7 +10,7 @@
             </button>
         </div>
 
-        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <h3 class="text-gray-500 text-xs uppercase font-bold mb-2">Your Cabinet</h3>
             <div class="flex justify-between items-center">
                 <span class="text-3xl font-bold text-blue-600">{{medications.length}}</span>
@@ -19,27 +19,78 @@
         </div>
     </div>
 
-{{!-- Medications Section --}}
-    <div class="md:col-span-3">
+        <div class="md:col-span-3">
         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-            💊 Current Medications
+            💊 Medicine Cabinet
         </h2>
 
         {{#if medications.length}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            
-             {{#each medications}}
-        {{> medication-card}} 
-    {{else}}
-        <p class="text-gray-500 italic">No medications found.</p>
-    {{/each}}
-</div>
+                {{#each medications}}
+                    {{#if is_active}}
+                    <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm relative group hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900">{{name}}</h3>
+                                <p class="text-sm text-blue-600 font-medium">{{dosage}} • {{frequency}}</p>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button class="edit-med-btn text-gray-400 hover:text-blue-500" 
+                                    data-id="{{id}}" 
+                                    data-name="{{name}}" 
+                                    data-dosage="{{dosage}}"
+                                    data-freq="{{frequency}}" 
+                                    data-refill="{{refill_date}}" 
+                                    data-reminder="{{reminder_time}}">
+                                    ✏️
+                                </button>
+                                <button class="archive-med-btn text-gray-400 hover:text-orange-500" data-id="{{id}}" title="Move to History">📥</button>
+                                <button class="delete-init-btn text-gray-400 hover:text-red-500" data-id="{{id}}" title="Delete Forever">🗑️</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-3 border-t border-gray-50 flex flex-wrap gap-2 text-xs text-gray-500">
+                            {{#if refill_date}}
+                                <span class="bg-orange-50 text-orange-700 px-2 py-1 rounded">🔄 Refill: {{format_date refill_date}}</span>
+                            {{/if}}
+                            {{#if reminder_time}}
+                                <span class="bg-purple-50 text-purple-700 px-2 py-1 rounded">⏰ Daily: {{format_time reminder_time}}</span>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/if}}
+                {{/each}}
             </div>
+
+        {{!-- History Section --}}
+         <div class="mt-8 border-t pt-4">
+                <button onclick="document.getElementById('past-meds').classList.toggle('hidden')" class="text-gray-500 hover:text-gray-700 font-medium flex items-center gap-2 mb-4">
+                    <span>📂 Show Medication History</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <div id="past-meds" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 opacity-75">
+                    {{#each medications}}
+                        {{#unless is_active}}
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-gray-600 line-through">{{name}}</h4>
+                                <p class="text-xs text-gray-500">{{dosage}}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="restore-med-btn text-green-600 hover:text-green-800 text-sm font-bold" data-id="{{id}}">Restore ↺</button>
+                                <button class="delete-init-btn text-red-400 hover:text-red-600 text-sm" data-id="{{id}}">✕</button>
+                            </div>
+                        </div>
+                        {{/unless}}
+                    {{/each}}
+                </div>
+            </div>
+
         {{else}}
             <div class="bg-white p-12 rounded-lg border-2 border-dashed border-gray-300 text-center">
-                <div class="mx-auto h-12 w-12 text-gray-400 mb-4 text-4xl">
-                    🩹
-                </div>
+                <div class="mx-auto h-12 w-12 text-gray-400 mb-4 text-4xl">🩹</div>
                 <h3 class="text-lg font-medium text-gray-900">Your cabinet is empty</h3>
                 <p class="text-gray-500 mb-4">Search for a medication to get started.</p>
                 <button data-modal-target="med-modal" data-modal-toggle="med-modal" class="text-blue-600 hover:underline">
@@ -79,6 +130,7 @@
         </div>
     {{/if}}
 </div>
+
 {{!-- Doctor input modal --}}
 
 <div id="doctor-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -124,46 +176,46 @@
 </div>
 
 {{!-- Upcoming Schedule Section --}}
-<div class="bg-white p-6 rounded-lg shadow-md mt-6">
-    <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <h3 class="font-bold text-gray-800">📅 Upcoming Schedule</h3>
-        <button class="text-xs text-blue-600 hover:underline">+ Add Event</button>
+<section class="mt-8">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-800">📅 Upcoming Schedule</h2>
+        <button data-modal-target="appt-modal" data-modal-toggle="appt-modal" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700" type="button">
+            + Add Visit
+        </button>
     </div>
-    
-    {{#if appointments.length}}
-        <ol class="relative border-l border-gray-200 ml-2">                  
-            {{#each appointments}}
-            <li class="mb-6 ml-4">
-                <div class="absolute w-3 h-3 bg-blue-600 rounded-full mt-1.5 -left-1.5 border border-white"></div>
-                
-                <time class="mb-1 text-sm font-normal leading-none text-gray-400">
-                    {{format_date this.date}}
-                </time>
-                
-                <h3 class="text-sm font-semibold text-gray-900">{{this.title}}</h3>
-                <p class="mb-4 text-xs font-normal text-gray-500">{{this.type}}</p>
-            </li>
-            {{/each}}
-        </ol>
-    {{else}}
-        <p class="text-sm text-gray-500 italic">No upcoming appointments.</p>
-    {{/if}}
-</div>
- {{!-- Medication input --}}
 
+    <div class="space-y-3">
+        {{#each appointments}}
+            <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500 shadow-sm flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm font-bold text-gray-900">{{title}}</p>
+                        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-0.5 rounded">{{type}}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-1">
+                        📅 {{date}} &nbsp;•&nbsp; ⏰ {{format_time time}}
+                    </p>
+                    {{#if reason}}
+                        <p class="text-xs text-gray-600 mt-1 italic">"{{reason}}"</p>
+                    {{/if}}
+                </div>
+                <button class="delete-appt text-gray-400 hover:text-red-500" data-id="{{id}}">✕</button>
+            </div>
+        {{else}}
+            <p class="text-gray-500 italic">No upcoming appointments.</p>
+        {{/each}}
+    </div>
+</section>
+
+ {{!-- Medication input --}}
 
 <div id="med-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Add a Medication
-                </h3>
-                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="med-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Add a Medication</h3>
+                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="med-modal">
+                    ✕
                 </button>
             </div>
             <div class="p-4 md:p-5">
@@ -171,44 +223,129 @@
                     <div>
                         <label for="med-search" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Search Drug Name</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                </svg>
-                            </div>
-                            <input type="search" id="med-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. Lisinopril, Ibuprofen..." required />
-                            <button type="button" id="search-btn" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                            <input type="search" id="med-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Lisinopril..." required />
+                            <button type="button" id="search-btn" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                         </div>
                     </div>
-                    
-                    <div id="search-results" class="hidden z-10 w-full bg-white rounded-lg shadow dark:bg-gray-700">
-                        <ul class="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
-                            </ul>
-                    </div>
+                    <div id="search-results" class="hidden z-10 w-full bg-white rounded-lg shadow"><ul class="h-48 py-2 overflow-y-auto"></ul></div>
 
                     <div>
-                        <label for="med-dosage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dosage </label>
-                        <input type="text" name="dosage" id="med-dosage" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="e.g. 10mg" required />
+                        <label for="med-dosage" class="block mb-2 text-sm font-medium text-gray-900">Dosage</label>
+                        <input type="text" id="med-dosage" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g. 10mg" required />
                     </div>
-                    
                     <div>
-                        <label for="med-frequency" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Frequency</label>
-                        <input type="text" name="frequency" id="med-frequency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="e.g. Daily, Weekly, As needed" required />
+                        <label for="med-frequency" class="block mb-2 text-sm font-medium text-gray-900">Frequency</label>
+                        <input type="text" id="med-frequency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g. Daily" required />
                     </div>
-
                     <div>
-                        <label for="med-category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                        <select id="med-category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                        <label for="med-category" class="block mb-2 text-sm font-medium text-gray-900">Category</label>
+                        <select id="med-category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                             <option value="Prescription" selected>Prescription</option>
-                            <option value="Over-the-Counter">Over-the-Counter (OTC)</option>
+                            <option value="Over-the-Counter">Over-the-Counter</option>
                             <option value="Supplement/Vitamin">Vitamin / Supplement</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
-
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to Cabinet</button>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Refill Date</label>
+                            <input type="date" id="med-refill" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Daily Reminder</label>
+                            <input type="time" id="med-reminder" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add to Cabinet</button>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+ {{!-- Medication Edit Modal --}}
+ <div id="edit-med-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-md m-4">
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
+            <h2 class="text-xl font-bold">Edit Medication</h2>
+            <button onclick="document.getElementById('edit-med-modal').classList.add('hidden')" class="text-gray-500 hover:text-gray-800">✕</button>
+        </div>
+        <form id="edit-med-form" class="space-y-4">
+            <input type="hidden" id="edit-med-id">
+            
+            <div><label class="block text-sm font-medium">Name</label><input type="text" id="edit-name" class="w-full border p-2 rounded"></div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-medium">Dosage</label><input type="text" id="edit-dosage" class="w-full border p-2 rounded"></div>
+                <div><label class="block text-sm font-medium">Frequency</label><input type="text" id="edit-freq" class="w-full border p-2 rounded"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-medium">Refill Date</label><input type="date" id="edit-refill" class="w-full border p-2 rounded"></div>
+                <div><label class="block text-sm font-medium">Reminder Time</label><input type="time" id="edit-reminder" class="w-full border p-2 rounded"></div>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+{{!-- Medication delete confirmation modal --}}
+<div id="delete-warning-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm m-4 border-l-4 border-red-500">
+        <h3 class="text-lg font-bold text-gray-900 mb-2">⚠️ Permanently Delete?</h3>
+        <p class="text-sm text-gray-500 mb-6">
+            This will wipe this record <b>forever</b>. <br>
+            If you just stopped taking it, click "Cancel" and use the <b>Archive (📥)</b> button instead.
+        </p>
+        <div class="flex justify-end gap-3">
+            <button onclick="document.getElementById('delete-warning-modal').classList.add('hidden')" class="px-4 py-2 border rounded hover:bg-gray-100">Cancel</button>
+            <button id="confirm-delete-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+
+{{!-- Appointment input modal --}}
+<div id="appt-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Add Appointment</h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="appt-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
+                </button>
+            </div>
+            <form class="p-4 md:p-5" id="add-appt-form">
+                <div class="grid gap-4 mb-4 grid-cols-2">
+                    <div class="col-span-2">
+                        <label for="appt-title" class="block mb-2 text-sm font-medium text-gray-900">Title</label>
+                        <input type="text" id="appt-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Physical with Dr. Smith" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 col-span-2">
+                    <div>
+                        <label for="appt-date" class="block mb-2 text-sm font-medium text-gray-900">Date</label>
+                        <input type="date" id="appt-date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    </div>
+                    <div>
+                        <label for="appt-time" class="block mb-2 text-sm font-medium text-gray-900">Time</label>
+                        <input type="time" id="appt-time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    </div>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="appt-type" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
+                        <select id="appt-type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                            <option value="Checkup">Checkup</option>
+                            <option value="Specialist">Specialist</option>
+                            <option value="Lab Work">Lab Work</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="appt-reason" class="block mb-2 text-sm font-medium text-gray-900">Reason (Optional)</label>
+                        <textarea id="appt-reason" rows="2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="text-white inline-flex items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    + Add Visit
+                </button>
+            </form>
         </div>
     </div>
 </div>

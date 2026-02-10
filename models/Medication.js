@@ -23,6 +23,22 @@ Medication.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        refills: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        refill_date: {
+            type: DataTypes.DATEONLY,
+            allowNull: true,
+        },
+        reminder_time: {
+            type: DataTypes.TIME,
+            allowNull: true,
+        },
+        is_active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        },
         category: {
             type: DataTypes.STRING,
             defaultValue: 'Prescription',

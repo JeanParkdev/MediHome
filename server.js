@@ -12,12 +12,7 @@ const helpers = require('./utils/helpers');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-//Handlebars.js engine with custom helpers
-const hbs = exphbs.create({
-    helpers: {
-      eq: (a, b) => a === b,
-    }
-  });
+const hbs = exphbs.create({ helpers });
 
 const sess = {
   secret: 'Super secret medical key',

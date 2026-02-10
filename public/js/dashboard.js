@@ -4,6 +4,7 @@ const resultsList = document.querySelector('#search-results ul');
 const resultsContainer = document.querySelector('#search-results');
 const addMedForm = document.querySelector('#add-med-form');
 
+//API Drug finder
 const searchDrugs = async (event) => {
     const query = medSearchInput.value.trim();
     if (!query) return;
@@ -102,6 +103,174 @@ deleteButtons.forEach(btn => {
 }
 );
 
+//Med edit handlers below
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.edit-med-btn');
+    if (btn) {
+        const d = btn.dataset;
+        document.getElementById('edit-med-id').value = d.id;
+        document.getElementById('edit-name').value = d.name;
+        document.getElementById('edit-dosage').value = d.dosage;
+        document.getElementById('edit-freq').value = d.freq;
+        document.getElementById('edit-refill').value = d.refill || '';
+        document.getElementById('edit-reminder').value = d.reminder || '';
+        document.getElementById('edit-med-modal').classList.remove('hidden');
+    }
+});
+
+//save changes from Edit Modal
+const editMedForm = document.querySelector('#edit-med-form');
+if (editMedForm) {
+    editMedForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('edit-med-id').value;
+        const updates = {
+            name: document.getElementById('edit-name').value,
+            dosage: document.getElementById('edit-dosage').value,
+            frequency: document.getElementById('edit-freq').value,
+            refill_date: document.getElementById('edit-refill').value || null,
+            reminder_time: document.getElementById('edit-reminder').value || null,
+        };
+        const response = await fetch(`/api/medications/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(updates),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) document.location.reload();
+        else alert('Failed to update medication.');
+    });
+}
+// Archive and Restore Handlers
+document.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('archive-med-btn')) {
+        const id = event.target.closest('.archive-med-btn').dataset.id;
+        const response = await fetch(`/api/medications/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ is_active: false }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            document.location.reload(); 
+        }
+    if (event.target.classList.contains('restore-med-btn')) {
+        const id = event.target.closest('.restore-med-btn').dataset.id;
+        const response = await fetch(`/api/medications/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ is_active: true }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            document.location.reload(); 
+        }
+    }
+}});
+
+//delete with warning
+let deleteTargetId = null;
+document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.delete-init-btn');
+    if (btn) {
+        deleteTargetId = btn.dataset.id;
+        document.getElementById('delete-modal').classList.remove('hidden');
+    }
+});
+
+const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener('click', async () => {
+        if (deleteTargetId) {
+            const response = await fetch(`/api/medications/${deleteTargetId}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                document.location.reload();
+            } else {
+                alert('Failed to delete medication.');
+            }
+        }});
+    }
+        
+
+
+//Archive and Restore Handlers
+const toggleStatusHandler = async (id, newStatus) => {
+    const response = await fetch(`/api/medications/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ is_active: newStatus }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+        document.location.reload();
+    }
+};
+    document.addEventListener('click', (e) => {
+        //archive
+        if (e.target.classList.contains('archive-med-btn')) {
+            const id = e.target.getAttribute('data-id').dataset.id;
+            toggleStatusHandler(id, false);
+        }
+        //restore
+        if (e.target.classList.contains('restore-med-btn')) {
+            const id= e.target.closest('.restore-med-btn').getAttribute('data-id');
+            toggleStatusHandler(id, true);
+       }
+    });
+// Edit Meds
+document.addEventListener('click', (e) => {
+    const id= e.target.closest('.edit-med-btn');
+    if (btn) {
+        const d= btn.dataset;
+        document.getElementById('edit-med-id').value = d.id;
+        document.getElementById('edit-name').value = d.name;
+        document.getElementById('edit-dosage').value = d.dosage;
+        document.getElementById('edit-freq').value = d.freq;
+        document.getElementById('edit-refill').value = d.refill || '';
+        document.getElementById('edit-reminder').value = d.reminder || '';
+        
+        document.getElementById('edit-med-modal').classList.remove('hidden');
+    }
+});
+// Save changes from Edit Modal
+document.getElementById('edit-med-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('edit-med-id').value;
+  const updates = {
+    name: document.getElementById('edit-name').value,
+    dosage: document.getElementById('edit-dosage').value,
+    frequency: document.getElementById('edit-freq').value,
+    refill_date: document.getElementById('edit-refill').value || null,
+    reminder_time: document.getElementById('edit-reminder').value || null,
+  };
+
+  const response = await fetch(`/api/medications/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(updates),
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (response.ok) document.location.reload();
+});
+
+document.getElementById('edit-med-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('edit-med-id').value;
+  const updates = {
+    name: document.getElementById('edit-name').value,
+    dosage: document.getElementById('edit-dosage').value,
+    frequency: document.getElementById('edit-freq').value,
+    refill_date: document.getElementById('edit-refill').value || null,
+    reminder_time: document.getElementById('edit-reminder').value || null,
+  };
+
+  const response = await fetch(`/api/medications/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(updates),
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (response.ok) document.location.reload();
+});
+
 //Doctor Handler
 
 const addDoctorFormHandler = async (event) => {
@@ -132,3 +301,51 @@ const addDoctorFormHandler = async (event) => {
     if (docForm) {
         docForm.addEventListener('submit', addDoctorFormHandler);
     }
+
+    //Appointment Handler
+
+    const addApptFormHandler = async (event) => {
+    event.preventDefault();
+
+    const title = document.querySelector('#appt-title').value.trim();
+    const date = document.querySelector('#appt-date').value;
+    const time = document.querySelector('#appt-time').value;
+    const type = document.querySelector('#appt-type').value;
+    const reason = document.querySelector('#appt-reason').value.trim();
+
+    if (title && date && time && type) {
+        const response = await fetch('/api/appointments', {
+        method: 'POST',
+        body: JSON.stringify({ title, date, time, type, reason }),
+        headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+        document.location.reload();
+        } else {
+        alert('Failed to add appointment');
+        }
+    }
+    };
+
+    const deleteApptHandler = async (event) => {
+    if (event.target.closest('.delete-appt')) {
+        const id = event.target.closest('.delete-appt').getAttribute('data-id');
+        const response = await fetch(`/api/appointments/${id}`, {
+        method: 'DELETE',
+        });
+
+        if (response.ok) {
+        document.location.reload();
+        } else {
+        alert('Failed to delete appointment');
+        }
+    }
+    };
+
+    const apptForm = document.querySelector('#add-appt-form');
+    if (apptForm) {
+    apptForm.addEventListener('submit', addApptFormHandler);
+    }
+
+    document.addEventListener('click', deleteApptHandler);
