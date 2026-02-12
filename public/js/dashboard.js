@@ -259,23 +259,6 @@ const checkReminders = () => {
 checkRefills();
 setInterval(checkReminders, 60000);
 
-// Edit Meds
-document.addEventListener('click', (e) => {
-    const id= e.target.closest('.edit-med-btn');
-    if (btn) {
-        const d= btn.dataset;
-        document.getElementById('edit-med-id').value = d.id;
-        document.getElementById('edit-name').value = d.name;
-        document.getElementById('edit-dosage').value = d.dosage;
-        document.getElementById('edit-freq').value = d.freq;
-        document.getElementById('edit-refill').value = d.refill || '';
-        document.getElementById('edit-reminder').value = d.reminder || '';
-        
-        document.getElementById('edit-med-modal').classList.remove('hidden');
-    }
-});
-
-
 //Doctor Handler
 
 const addDoctorFormHandler = async (event) => {
