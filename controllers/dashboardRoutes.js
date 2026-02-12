@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Medication, Doctor, Appointment } = require('../models');
+const { User, Medication, Doctor, Appointment, Allergy } = require('../models');
 const withAuth = require('../utils/auth'); 
 
 //GET dashboard
@@ -13,6 +13,7 @@ router.get('/', withAuth, async (req, res) => {
         { model: Medication },
         { model: Doctor },   
         { model: Appointment },
+        { model: Allergy}
       ],
       order: [[Appointment, 'date', 'ASC']]
     });

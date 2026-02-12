@@ -326,3 +326,41 @@ if (docForm) docForm.addEventListener('submit', addDoctorFormHandler);
             if (response.ok) document.location.reload();
         }
     });
+
+    //Allergy Handler
+    const allergyForm = document.getElementById('add-allergy-form');
+    if (allergyForm) {
+        allergyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+        
+        const allergen = document.getElementById('allergy-input').value.trim();
+        const reaction = document.getElementById('reaction-input').value.trim();
+        const severity = document.getElementById('severity-input').value; // Dropdown
+
+        if (allergen && reaction && severity) {
+            const response = await fetch('/api/allergies', {
+                method: 'POST',
+                body: JSON.stringify({ allergen, reaction, severity }),
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (response.ok) {
+                document.location.reload();
+            } else {
+                alert('Failed to save allergy. Please check all fields.');
+            }
+        }
+    });
+}
+
+    // Delete Allergy
+    document.body.addEventListener('click', async (event) => {
+    const btn = event.target.closest('.delete-allergy-btn');
+    if (btn) {
+        if(confirm("Remove this allergy?")) {
+            const id = btn.dataset.id;
+            const response = await fetch(`/api/allergies/${id}`, { method: 'DELETE' });
+            if (response.ok) document.location.reload();
+        }
+    }
+});

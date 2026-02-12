@@ -10,8 +10,63 @@
             </button>
         </div>
 
+        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-red-500">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                    ⚠️ Allergies
+                </h2>
+                <button onclick="document.getElementById('allergy-modal').classList.remove('hidden')" class="text-xs bg-red-100 text-red-600 px-3 py-1.5 rounded hover:bg-red-200 font-bold transition-colors">
+                    + Add
+                </button>
+            </div>
+            
+            {{#if allergies.length}}
+                <ul class="space-y-3">
+                    {{#each allergies}}
+                    <li class="flex justify-between items-start text-sm bg-gray-50 p-3 rounded-lg border border-gray-100 group hover:border-red-200 transition-colors">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-gray-800 text-base">{{allergen}}</span>
+                                <span class="severity-badge text-[10px] px-2 py-0.5 rounded border font-bold uppercase tracking-wide" 
+                                      data-val="{{severity}}">
+                                    {{severity}}
+                                </span>
+                            </div>
+                            <span class="text-xs text-gray-500 block mt-1">{{reaction}}</span>
+                        </div>
+                        
+                        <button class="delete-allergy-btn text-gray-300 hover:text-red-600 transition-colors p-1" 
+                                data-id="{{id}}" 
+                                title="Remove Allergy">
+                            🗑️
+                        </button>
+                    </li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <div class="text-center py-4 text-gray-400">
+                    <p class="text-sm italic">No known allergies.</p>
+                </div>
+            {{/if}}
+        </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const badges = document.querySelectorAll('.severity-badge');
+        badges.forEach(badge => {
+            const val = badge.getAttribute('data-val');
+            if (val === 'Mild') badge.classList.add('bg-green-100', 'text-green-700', 'border-green-200');
+            else if (val === 'Moderate') badge.classList.add('bg-yellow-100', 'text-yellow-700', 'border-yellow-200');
+            else if (val === 'Severe') badge.classList.add('bg-orange-100', 'text-orange-700', 'border-orange-200');
+            else if (val === 'Life-Threatening') badge.classList.add('bg-red-100', 'text-red-700', 'border-red-200', 'animate-pulse');
+            else badge.classList.add('bg-gray-100', 'text-gray-700', 'border-gray-200');
+        });
+    });
+</script>
+
     <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <h3 class="text-gray-500 text-xs uppercase font-bold mb-2">Your Cabinet</h3>
+            <h3 class="text-gray-500 text-xs uppercase font-bold mb-2">Your Medicine</h3>
             <div class="flex justify-between items-center">
                 <span class="text-3xl font-bold text-blue-600">{{medications.length}}</span>
                 <span class="text-sm text-gray-400">Total Items</span>
@@ -288,6 +343,8 @@
         </div>
     </div>
 </div>
+
+
 
  {{!-- Medication Edit Modal --}}
  <div id="edit-med-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
