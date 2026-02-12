@@ -262,6 +262,7 @@
         </div>
     </div>
 </div>
+
  {{!-- Medication Edit Modal --}}
  <div id="edit-med-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg w-full max-w-md m-4">
@@ -301,6 +302,36 @@
         </div>
     </div>
 </div>
+
+{{!-- reminder alert --}}
+<div id="smart-toast" class="hidden fixed bottom-5 right-5 z-50 w-80 bg-white rounded-lg shadow-2xl border-l-4 overflow-hidden transition-all duration-500 transform translate-y-0">
+    <div class="p-4">
+        <div class="flex items-start gap-3">
+            <div id="toast-icon-bg" class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center">
+                <span id="toast-emoji" class="text-xl">🔔</span>
+            </div>
+            
+            <div class="flex-1 min-w-0">
+                <h3 id="toast-title" class="text-sm font-bold text-gray-900 leading-none">Alert</h3>
+                <p id="toast-message" class="mt-1 text-xs text-gray-500">Message goes here</p>
+                
+                <div class="mt-3 flex gap-2">
+                    <button id="toast-primary-btn" onclick="dismissToast()" class="text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors">
+                        OK
+                    </button>
+                    <button onclick="dismissToast()" class="bg-gray-100 text-gray-600 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors">
+                        Dismiss
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!--Confetti--}}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script src="/js/dashboard.js"></script>
 
 {{!-- Appointment input modal --}}
 <div id="appt-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
