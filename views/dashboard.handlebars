@@ -80,7 +80,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <button class="restore-med-btn text-green-600 hover:text-green-800 text-sm font-bold" data-id="{{id}}">Restore ↺</button>
-                                <button class="delete-init-btn text-red-400 hover:text-red-600 text-sm" data-id="{{id}}">✕</button>
+                                <button class="delete-init-btn text-red-400 hover:text-red-600 text-sm" data-id="{{id}}">🗑️</button>
                             </div>
                         </div>
                         {{/unless}}
@@ -108,28 +108,49 @@
             🩺 My Care Team
         </h2>
         <button data-modal-target="doctor-modal" data-modal-toggle="doctor-modal" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700" type="button">
-    + Add Doctor
-</button>
+    + Add Doctor </button>
     </div>
 
     {{#if doctors.length}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {{#each doctors}}
-            <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-green-500 flex justify-between items-center">
-                <div>
-                    <h3 class="font-bold text-gray-900">{{this.name}}</h3>
-                    <p class="text-sm text-gray-500">{{this.specialty}}</p>
-                    <a href="tel:{{this.phone}}" class="text-xs text-blue-600 hover:underline mt-1 block">📞 {{this.phone}}</a>
+            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm relative group hover:shadow-md transition-shadow">
+                
+                <div class="flex justify-between items-start">
+                    
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">{{name}}</h3>
+                        <p class="text-sm text-blue-600 font-medium">{{specialty}}</p>
+                        
+                        <div class="mt-2 space-y-1">
+                            <a href="tel:{{phone}}" class="text-xs text-gray-500 hover:text-blue-600 block flex items-center gap-1">
+                                📞 {{phone}}
+                            </a>
+                            {{#if email}}
+                            <a href="mailto:{{email}}" class="text-xs text-gray-500 hover:text-blue-600 block flex items-center gap-1">
+                                ✉️ {{email}}
+                            </a>
+                            {{/if}}
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button class="delete-doc-btn text-gray-400 hover:text-red-500 transition-colors" 
+                                data-id="{{id}}" 
+                                title="Remove Doctor">
+                            🗑️
+                        </button>
+                    </div>
                 </div>
             </div>
             {{/each}}
         </div>
     {{else}}
-        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 text-center text-sm text-gray-500">
-            No doctors added yet. Keep their contact info handy here.
+        <div class="p-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 text-center">
+            <p class="text-gray-400 mb-2">No doctors added yet.</p>
+            <p class="text-xs text-gray-400">Add your primary care provider or specialists here.</p>
         </div>
     {{/if}}
-</div>
 
 {{!-- Doctor input modal --}}
 

@@ -281,7 +281,18 @@ const addDoctorFormHandler = async (event) => {
 
 const docForm = document.querySelector('#add-doctor-form');
 if (docForm) docForm.addEventListener('submit', addDoctorFormHandler);
+    //Delete Doctor
+    document.addEventListener('click', async (event) => {
+        const btn = event.target.closest('.delete-doc-btn');
 
+        if (btn) {
+            const id = btn.dataset.id;
+            if (confirm('Are you sure you want to delete this doctor?')) {
+                const response = await fetch(`/api/doctors/${id}`, { method: 'DELETE' });
+                if (response.ok) document.location.reload();
+                else alert('Failed to delete doctor.');
+        }
+    }});
 
     //Appointment Handler
 
