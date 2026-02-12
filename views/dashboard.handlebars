@@ -199,7 +199,7 @@
 {{!-- Upcoming Schedule Section --}}
 <section class="mt-8">
     <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold text-gray-800">📅 Upcoming Schedule</h2>
+        <h2 class="text-2xl font-bold text-gray-800">📅 Upcoming Appointments</h2>
         <button data-modal-target="appt-modal" data-modal-toggle="appt-modal" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700" type="button">
             + Add Visit
         </button>
@@ -207,7 +207,7 @@
 
     <div class="space-y-3">
         {{#each appointments}}
-            <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500 shadow-sm flex justify-between items-start">
+            <div class="bg-white p-4 rounded-xl border-l-4 border-purple-500 shadow-sm flex justify-between items-start">
                 <div>
                     <div class="flex items-center gap-2">
                         <p class="text-sm font-bold text-gray-900">{{title}}</p>
@@ -220,7 +220,12 @@
                         <p class="text-xs text-gray-600 mt-1 italic">"{{reason}}"</p>
                     {{/if}}
                 </div>
-                <button class="delete-appt text-gray-400 hover:text-red-500" data-id="{{id}}">✕</button>
+                <button class="delete-appt text-gray-400 hover:text-red-500 text-lg transition-colors p-1" 
+                        data-id="{{id}}" 
+                        title="Cancel Appointment">
+                    🗑️
+                </button>
+
             </div>
         {{else}}
             <p class="text-gray-500 italic">No upcoming appointments.</p>
