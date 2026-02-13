@@ -364,3 +364,43 @@ if (docForm) docForm.addEventListener('submit', addDoctorFormHandler);
         }
     }
 });
+
+// I hope this works
+
+document.addEventListener("DOMContentLoaded", function() {
+    const allHeaders = document.querySelectorAll('h3');
+    
+    let hasLisinopril = false;
+    let hasIbuprofen = false;
+
+    for (let i = 0; i < allHeaders.length; i++) {
+        let text = allHeaders[i].innerText.toLowerCase();
+        if (text.includes('lisinopril')) {
+            hasLisinopril = true;
+        }
+        if (text.includes('ibuprofen') || text.includes('advil')) {
+            hasIbuprofen = true;
+        }
+    }
+    if (hasLisinopril && hasIbuprofen) {
+        const modal = document.getElementById('interaction-modal');
+        const titleEl = document.getElementById('interaction-title');
+        const msgEl = document.getElementById('interaction-message');
+
+        if (modal && titleEl && msgEl) {
+
+            titleEl.innerText = '⚠️ Severe Interaction Detected';
+            msgEl.innerHTML = `
+                <p class="mb-2">Combining <b>Lisinopril</b> and <b>Ibuprofen</b> is not recommended.</p>
+                <ul class="list-disc pl-5 mb-3 text-red-600 font-medium">
+                    <li>Significantly reduces blood pressure control</li>
+                    <li>Causes severe kidney stress</li>
+                </ul>
+                <p class="text-xs italic text-gray-500 border-t pt-2">
+                    Please contact your primary care provider immediately before taking these medications together.
+                </p>
+            `;
+            modal.classList.remove('hidden');
+        }
+    }
+});

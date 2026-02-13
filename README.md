@@ -1,144 +1,97 @@
-Medi Home
+# MediHome: Personal Medical Dashboard 🩺
 
-## 📌 Overview
+## Description
 
-This project is your second major portfolio piece and your first large-scale **full-stack group application**. The goal is to design, build, and deploy a real-world web application that demonstrates both your technical skills **and** your ability to collaborate effectively with other developers.
+**MediHome** is a secure, full-stack web application designed to act as a "digital medical wallet" for individuals and families. MediHome provides a centralized, private dashboard to track prescriptions, manage care teams, log allergies, and schedule appointments.
 
-By the end of this project, your team should have a **fully deployed application** that you can confidently show to employers.
+Built with security in mind, the application features authenticated user sessions, password hashing, and environment variable protection. The responsive interface ensures critical medical data is accessible on desktop or mobile devices during emergencies.
 
----
+**Deployed Application:** [Link to your Render App Here]
 
-## 🧩 Project Requirements
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Database Structure](#database-structure)
+- [Questions](#questions)
 
-Your group will build a full-stack application using everything you’ve learned so far. Your application **must meet the requirements below**.
+## Features
 
----
+### 🔐 Security & Authentication
+* **User Accounts:** Secure sign-up and login functionality.
+* **Data Protection:** Passwords are never stored in plain text (hashed via `bcrypt`).
+* **Session Management:** Uses `express-session` and `connect-session-sequelize` to keep users logged in securely.
+* **Environment Protection:** Sensitive API keys and database credentials are hidden using `dotenv`.
 
-## 🛠️ Technical Requirements
+### ⏰ Custom Medication Reminders
+* **Time-Based Alerts:** Users can set specific, custom times to be reminded to take their medications, ensuring they stay on schedule.
+* **Visual Polish:** The application utilizes a `canvas-confetti` animation to add a moment of visual delight to the user experience.
 
-Your application must:
+### 🚨 Smart Interaction Alerts
+* **Automated Safety Checks:** The dashboard actively scans the user's active medication list upon rendering.
+* **High-Visibility Warnings:** Triggers a centered, modal-based alert system if severe drug combinations (e.g., Lisinopril and Ibuprofen) are detected, advising the user to contact their care team.
 
-- Use **Node.js** and **Express.js**
-- Use **Handlebars.js**
-- Use **PostgreSQL**
-- Include **GET, POST, PUT, and DELETE** routes
-- Follow the **MVC** folder structure
-- Implement **user authentication**
-- Use **environment variables**
-- Be **deployed on Render**
-- Be **interactive**, **responsive**, and **polished**
+### 💊 Medication Cabinet
+* **Digital Inventory:** Track current prescriptions, dosages, and frequencies.
+* **Refill Tracking:** Input refill dates to generate automatic visual reminders when prescriptions are running low.
+* **History Archive:** "Move to History" function allows users to archive old medications without losing their historical medical records.
 
----
+### 🩺 Care Team Management
+* **Provider Directory:** Store contact information for primary care physicians (PCPs) and specialists.
+* **One-Click Contact:** Integrated `tel:` and `mailto:` links for quick communication from mobile devices.
 
-## 🧱 Database Requirements
+### 📅 Smart Scheduling
+* **Appointment Tracker:** Log upcoming visits with date, time, and reason for visit.
+* **Visual Dashboard:** Upcoming appointments are sorted and displayed prominently on the dashboard.
 
-Your application must include:
+### ⚠️ Allergy Logs
+* **Safety Tracking:** Maintain a list of known allergies with reaction details.
+* **Severity Indicators:** Visual color-coded badges (Green/Yellow/Orange/Red) indicate severity levels from "Mild" to "Life-Threatening".
 
-- A minimum of **2 database tables**
-- At least **5 records per table**
+## Tech Stack
 
-Tables must represent **meaningful application data**.
+**Frontend:**
+* **Handlebars.js:** Used as the server-side templating engine to dynamically generate HTML.
+* **Tailwind CSS:** A utility-first CSS framework used for rapid UI development and mobile responsiveness.
+* **Vanilla JavaScript:** Used for DOM manipulation, handling modal logic, and executing asynchronous Fetch API requests.
+* **Canvas Confetti:** Integrated for visual effects and UI polish.
 
----
+**Backend & API:**
+* **Node.js & Express.js:** Powers the core server and handles routing.
+* **RESTful API Architecture:** The application utilizes a custom-built API to handle all Create, Read, Update, and Delete (CRUD) operations for user data, medications, doctors, and allergies. All data is parsed and returned in JSON format.
+* **Sequelize ORM:** Manages the MySQL database relationships and queries.
+* **Security:** Implements `bcrypt` for password hashing and `express-session` for secure user state management.
+* **Third-Party API Integration:** Utilizes the **FDA Drug Label API** (`api.fda.gov`) to dynamically fetch, search, and display accurate, real-world pharmaceutical data directly within the application.
 
-## 🗄️ Database Options (Choose One)
 
-- **Sequelize ORM**
-- **pg (SQL-first)**
+## Usage
 
-Both are valid industry approaches.
+1.  Navigate to `https://medihome-app.onrender.com/.
+2.  **Sign Up:** Create a secure account.
+3.  **Dashboard:**
+    * Use the **"+ Add"** buttons to populate your medical data.
+    * Set up custom time-based reminders for your prescriptions.
+    * Use the **Pencil Icon** to edit dosages or refill dates.
 
----
+![Dashboard Screenshot](./assets/images/screenshotdash.png)
 
-## 🔗 Recommended (Not Required): Table Relationships & Joins
+## Database Structure
 
-While not required for full credit, teams are **strongly encouraged** to:
+The application follows a relational model where the `User` is the central entity.
 
-- Define relationships between tables (one-to-many or many-to-many)
-- Use **JOIN queries** (or Sequelize associations) where appropriate
+* **Users** have a One-to-Many relationship with **Medications**.
+* **Users** have a One-to-Many relationship with **Doctors**.
+* **Users** have a One-to-Many relationship with **Appointments**.
+* **Users** have a One-to-Many relationship with **Allergies**.
 
-Examples:
-
-- Users → Posts
-- Users → Orders
-- Events → Attendees
-
-Implementing relationships improves:
-
-- Data modeling skills
-- Query design
-- Portfolio quality
-
-⚠️ Teams will **not be penalized** for choosing simpler table structures.
-
----
-
-## 🧪 Exploration Requirement (Required)
-
-Your project must include **at least TWO** of the following:
-
-- External APIs
-- New npm packages
-- New frontend/CSS technologies
-- New backend or tooling concepts
-
----
-
-## 📘 Repository README Requirements
-
-Your repository must include:
-
-- Description
-- Technologies
-- Screenshots
-- Deployed link
+This ensures that data is always scoped privately to the logged-in user.
 
 ---
 
-## 🎤 Presentation Requirements
+## Questions
 
-Your team presentation must include:
+For questions about this project, please contact:
 
-- Elevator pitch
-- Concept
-- Process
-- Demo
-- Future development
-
-All team members must speak at least once.
-
----
-
-## 📊 Grading Breakdown
-
-### 🧠 Technical Acceptance Criteria — 25%
-
-- Full CRUD routes
-- MVC + Handlebars
-- PostgreSQL (Sequelize or pg)
-- **2 tables with 5 records each**
-- Authentication
-- **Two exploration items**
-
-### 🤝 Collaboration — 10%
-
-- Balanced GitHub contributions
-
-(Other grading categories unchanged)
-
----
-
-## 📤 Submission Instructions
-
-Each member submits:
-
-- Deployed app URL
-- GitHub repo URL
-
----
-
-## ✅ Final Notes
-
-This project mirrors **real-world team development**. Communicate early, commit often, and build with intention.
-
-Build something you’re proud to present.
+* **GitHub:** [[JeanParkDev]](https://github.com/JeanParkDev])
+* **Email:** [thejeanpark@gmail.com]
