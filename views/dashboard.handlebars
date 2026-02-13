@@ -1,11 +1,12 @@
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
     
     <div class="md:col-span-1 space-y-4">
+        
         <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600">
             <h2 class="text-xl font-bold text-gray-800">Hello, {{username}}!</h2>
             <p class="text-gray-500 text-sm mb-4">Welcome to your MediHome.</p>
             
-            <button data-modal-target="med-modal" data-modal-toggle="med-modal" class="w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors flex items-center justify-center gap-2">
+            <button onclick="document.getElementById('med-modal').classList.remove('hidden')" class="w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors flex items-center justify-center gap-2">
                 <span class="text-xl">+</span> Add Medication
             </button>
         </div>
@@ -50,7 +51,7 @@
             {{/if}}
         </div>
 
-    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <h3 class="text-gray-500 text-xs uppercase font-bold mb-2">Your Medicine</h3>
             <div class="flex justify-between items-center">
                 <span class="text-3xl font-bold text-blue-600">{{medications.length}}</span>
@@ -103,8 +104,8 @@
                 {{/each}}
             </div>
 
-        {{!-- History Section --}}
-         <div class="mt-8 border-t pt-4">
+            {{!-- History Section --}}
+            <div class="mt-8 border-t pt-4">
                 <button onclick="document.getElementById('past-meds').classList.toggle('hidden')" class="text-gray-500 hover:text-gray-700 font-medium flex items-center gap-2 mb-4">
                     <span>📂 Show Medication History</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -133,7 +134,7 @@
                 <div class="mx-auto h-12 w-12 text-gray-400 mb-4 text-4xl">🩹</div>
                 <h3 class="text-lg font-medium text-gray-900">Your cabinet is empty</h3>
                 <p class="text-gray-500 mb-4">Search for a medication to get started.</p>
-                <button data-modal-target="med-modal" data-modal-toggle="med-modal" class="text-blue-600 hover:underline">
+                <button onclick="document.getElementById('med-modal').classList.remove('hidden')" class="text-blue-600 hover:underline">
                     Add your first medication
                 </button>
             </div>
@@ -141,27 +142,25 @@
     </div>
 </div>
 
-{{!-- Care Team Section --}}
+{{!-- Care Team  --}}
 <div class="mt-8">
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
             🩺 My Care Team
         </h2>
-        <button data-modal-target="doctor-modal" data-modal-toggle="doctor-modal" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700" type="button">
-    + Add Doctor </button>
+        <button onclick="document.getElementById('doctor-modal').classList.remove('hidden')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700" type="button">
+            + Add Doctor 
+        </button>
     </div>
 
     {{#if doctors.length}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {{#each doctors}}
             <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm relative group hover:shadow-md transition-shadow">
-                
                 <div class="flex justify-between items-start">
-                    
                     <div>
                         <h3 class="text-lg font-bold text-gray-900">{{name}}</h3>
                         <p class="text-sm text-blue-600 font-medium">{{specialty}}</p>
-                        
                         <div class="mt-2 space-y-1">
                             <a href="tel:{{phone}}" class="text-xs text-gray-500 hover:text-blue-600 block flex items-center gap-1">📞 {{phone}}</a>
                             {{#if email}}
@@ -169,10 +168,8 @@
                             {{/if}}
                         </div>
                     </div>
-                    
                     <div class="flex gap-2">
-                        <button class="delete-doc-btn text-gray-400 hover:text-red-500 transition-colors" 
-                                data-id="{{id}}" title="Remove Doctor">🗑️</button>
+                        <button class="delete-doc-btn text-gray-400 hover:text-red-500 transition-colors" data-id="{{id}}" title="Remove Doctor">🗑️</button>
                     </div>
                 </div>
             </div>
@@ -181,16 +178,15 @@
     {{else}}
         <div class="p-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 text-center">
             <p class="text-gray-400 mb-2">No doctors added yet.</p>
-            <p class="text-xs text-gray-400">Add your primary care provider or specialists here.</p>
         </div>
     {{/if}}
 </div>
 
-{{!-- Upcoming Schedule Section --}}
+{{!-- Upcoming Appointments --}}
 <section class="mt-8">
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold text-gray-800">📅 Upcoming Appointments</h2>
-        <button data-modal-target="appt-modal" data-modal-toggle="appt-modal" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700" type="button">
+        <button onclick="document.getElementById('appt-modal').classList.remove('hidden')" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700" type="button">
             + Add Visit
         </button>
     </div>
@@ -203,14 +199,10 @@
                         <p class="text-sm font-bold text-gray-900">{{title}}</p>
                         <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-0.5 rounded">{{type}}</span>
                     </div>
-                    <p class="text-sm text-gray-600 mt-1"> 📅 {{date}} &nbsp;•&nbsp; ⏰ {{format_time time}}</p>
-                    {{#if reason}}
-                        <p class="text-xs text-gray-600 mt-1 italic">"{{reason}}"</p>
-                    {{/if}}
+                    <p class="text-sm text-gray-600 mt-1">📅 {{format_date date}} &nbsp;•&nbsp; ⏰ {{format_time time}}</p>
+                    {{#if reason}}<p class="text-xs text-gray-600 mt-1 italic">"{{reason}}"</p>{{/if}}
                 </div>
-                <button class="delete-appt text-gray-400 hover:text-red-500 text-lg transition-colors p-1" 
-                        data-id="{{id}}" title="Cancel Appointment">🗑️ </button>
-
+                <button class="delete-appt text-gray-400 hover:text-red-500 text-lg transition-colors p-1" data-id="{{id}}" title="Cancel Appointment">🗑️</button>
             </div>
         {{else}}
             <p class="text-gray-500 italic">No upcoming appointments.</p>
@@ -218,256 +210,240 @@
     </div>
 </section>
 
-{{!-- Doctor input modal --}}
 
-<div id="doctor-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Add a Doctor
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="doctor-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <form class="p-4 md:p-5" id="add-doctor-form">
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                    <div class="col-span-2">
-                        <label for="doc-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Doctor's Name</label>
-                        <input type="text" id="doc-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Dr. Smith" required>
-                    </div>
-                    <div class="col-span-2">
-                        <label for="doc-specialty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specialty</label>
-                        <input type="text" id="doc-specialty" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e.g. Cardiologist, PCP" required>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="doc-phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                        <input type="tel" id="doc-phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="555-0123" required>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="doc-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" id="doc-email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="doc@clinic.com" required>
-                    </div>
+{{!-- Modals--}}
+
+{{!-- Medication Input Modal --}}
+<div id="med-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl relative">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg text-gray-800">Add Medication</h3>
+            <button onclick="document.getElementById('med-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">✕</button>
+        </div>
+        <form class="space-y-3" id="add-med-form">
+            <div>
+                <label for="med-search" class="block text-xs font-bold text-gray-500 mb-1">Drug Name</label>
+                <div class="flex gap-2">
+                    <input type="search" id="med-search" class="w-full border p-2 rounded text-sm" placeholder="e.g. Lisinopril..." required>
+                    <button type="button" id="search-btn" class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold">Search</button>
                 </div>
-                <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    Add Doctor
-                </button>
-            </form>
-        </div>
-    </div>
-
-
- {{!-- Medication input --}}
-<div id="med-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Add a Medication</h3>
-                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="med-modal">
-                    ✕
-                </button>
             </div>
-            <div class="p-4 md:p-5">
-                <form class="space-y-4" id="add-med-form">
-                    <div>
-                        <label for="med-search" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Search Drug Name</label>
-                        <div class="relative">
-                            <input type="search" id="med-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Lisinopril..." required />
-                            <button type="button" id="search-btn" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
-                        </div>
-                    </div>
-                    <div id="search-results" class="hidden z-10 w-full bg-white rounded-lg shadow"><ul class="h-48 py-2 overflow-y-auto"></ul></div>
+            <div id="search-results" class="hidden z-10 w-full bg-white rounded-lg shadow border border-gray-100"><ul class="h-24 py-1 overflow-y-auto text-xs"></ul></div>
 
-                    <div>
-                        <label for="med-dosage" class="block mb-2 text-sm font-medium text-gray-900">Dosage</label>
-                        <input type="text" id="med-dosage" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g. 10mg" required />
-                    </div>
-                    <div>
-                        <label for="med-frequency" class="block mb-2 text-sm font-medium text-gray-900">Frequency</label>
-                        <input type="text" id="med-frequency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g. Daily" required />
-                    </div>
-                    <div>
-                        <label for="med-category" class="block mb-2 text-sm font-medium text-gray-900">Category</label>
-                        <select id="med-category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                            <option value="Prescription" selected>Prescription</option>
-                            <option value="Over-the-Counter">Over-the-Counter</option>
-                            <option value="Supplement/Vitamin">Vitamin / Supplement</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Refill Date</label>
-                            <input type="date" id="med-refill" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
-                        </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Daily Reminder</label>
-                            <input type="time" id="med-reminder" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add to Cabinet</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
- {{!-- Medication Edit Modal --}}
- <div id="edit-med-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg w-full max-w-md m-4">
-        <div class="flex justify-between items-center mb-4 border-b pb-2">
-            <h2 class="text-xl font-bold">Edit Medication</h2>
-            <button onclick="document.getElementById('edit-med-modal').classList.add('hidden')" class="text-gray-500 hover:text-gray-800">✕</button>
-        </div>
-        <form id="edit-med-form" class="space-y-4">
-            <input type="hidden" id="edit-med-id">
-            
-            <div><label class="block text-sm font-medium">Name</label><input type="text" id="edit-name" class="w-full border p-2 rounded"></div>
-            <div class="grid grid-cols-2 gap-4">
-                <div><label class="block text-sm font-medium">Dosage</label><input type="text" id="edit-dosage" class="w-full border p-2 rounded"></div>
-                <div><label class="block text-sm font-medium">Frequency</label><input type="text" id="edit-freq" class="w-full border p-2 rounded"></div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div><label class="block text-sm font-medium">Refill Date</label><input type="date" id="edit-refill" class="w-full border p-2 rounded"></div>
-                <div><label class="block text-sm font-medium">Reminder Time</label><input type="time" id="edit-reminder" class="w-full border p-2 rounded"></div>
+            <div>
+                <label for="med-dosage" class="block text-xs font-bold text-gray-500 mb-1">Dosage</label>
+                <input type="text" id="med-dosage" class="w-full border p-2 rounded text-sm" placeholder="e.g. 10mg" required>
             </div>
             
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Save Changes</button>
+            <div>
+                <label for="med-frequency" class="block text-xs font-bold text-gray-500 mb-1">Frequency</label>
+                <input type="text" id="med-frequency" class="w-full border p-2 rounded text-sm" placeholder="e.g. Daily" required>
+            </div>
+
+            <div>
+                <label for="med-category" class="block text-xs font-bold text-gray-500 mb-1">Category</label>
+                <select id="med-category" class="w-full border p-2 rounded text-sm">
+                    <option value="Prescription" selected>Prescription</option>
+                    <option value="Over-the-Counter">Over-the-Counter</option>
+                    <option value="Supplement/Vitamin">Vitamin / Supplement</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="flex gap-2">
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Refill Date</label>
+                    <input type="date" id="med-refill" class="w-full border p-2 rounded text-sm">
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Reminder</label>
+                    <input type="time" id="med-reminder" class="w-full border p-2 rounded text-sm">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full mt-4 px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 font-bold">Add to Cabinet</button>
         </form>
     </div>
 </div>
 
-{{!-- Medication delete confirmation modal --}}
+{{!-- Doctor Input Modal --}}
+<div id="doctor-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl relative">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg text-gray-800">Add Doctor</h3>
+            <button onclick="document.getElementById('doctor-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">✕</button>
+        </div>
+        <form class="space-y-3" id="add-doctor-form">
+            <div>
+                <label for="doc-name" class="block text-xs font-bold text-gray-500 mb-1">Doctor's Name</label>
+                <input type="text" id="doc-name" class="w-full border p-2 rounded text-sm" placeholder="Dr. Smith" required>
+            </div>
+            <div>
+                <label for="doc-specialty" class="block text-xs font-bold text-gray-500 mb-1">Specialty</label>
+                <input type="text" id="doc-specialty" class="w-full border p-2 rounded text-sm" placeholder="e.g. Cardiologist" required>
+            </div>
+            <div>
+                <label for="doc-phone" class="block text-xs font-bold text-gray-500 mb-1">Phone</label>
+                <input type="tel" id="doc-phone" class="w-full border p-2 rounded text-sm" placeholder="555-0123" required>
+            </div>
+            <div>
+                <label for="doc-email" class="block text-xs font-bold text-gray-500 mb-1">Email</label>
+                <input type="email" id="doc-email" class="w-full border p-2 rounded text-sm" placeholder="doc@clinic.com">
+            </div>
+            <button type="submit" class="w-full mt-4 px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 font-bold">Add Doctor</button>
+        </form>
+    </div>
+</div>
+
+{{!-- Appointment Input Modal --}}
+<div id="appt-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl relative">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg text-gray-800">Add Appointment</h3>
+            <button onclick="document.getElementById('appt-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">✕</button>
+        </div>
+        <form class="space-y-3" id="add-appt-form">
+            <div>
+                <label for="appt-title" class="block text-xs font-bold text-gray-500 mb-1">Title</label>
+                <input type="text" id="appt-title" class="w-full border p-2 rounded text-sm" placeholder="Physical with Dr. Smith" required>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-1/2">
+                    <label for="appt-date" class="block text-xs font-bold text-gray-500 mb-1">Date</label>
+                    <input type="date" id="appt-date" class="w-full border p-2 rounded text-sm" required>
+                </div>
+                <div class="w-1/2">
+                    <label for="appt-time" class="block text-xs font-bold text-gray-500 mb-1">Time</label>
+                    <input type="time" id="appt-time" class="w-full border p-2 rounded text-sm" required>
+                </div>
+            </div>
+            <div>
+                <label for="appt-type" class="block text-xs font-bold text-gray-500 mb-1">Type</label>
+                <select id="appt-type" class="w-full border p-2 rounded text-sm">
+                    <option value="Checkup">Checkup</option>
+                    <option value="Specialist">Specialist</option>
+                    <option value="Lab Work">Lab Work</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label for="appt-reason" class="block text-xs font-bold text-gray-500 mb-1">Reason (Optional)</label>
+                <textarea id="appt-reason" rows="2" class="w-full border p-2 rounded text-sm"></textarea>
+            </div>
+            <button type="submit" class="w-full mt-4 px-4 py-2 text-sm bg-purple-600 text-white rounded hover:bg-purple-700 font-bold">+ Add Visit</button>
+        </form>
+    </div>
+</div>
+
+{{!-- Medication Edit Modal --}}
+<div id="edit-med-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl relative">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg text-gray-800">Edit Medication</h3>
+            <button onclick="document.getElementById('edit-med-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">✕</button>
+        </div>
+        <form class="space-y-3" id="edit-med-form">
+            <input type="hidden" id="edit-med-id">
+            <div>
+                <label class="block text-xs font-bold text-gray-500 mb-1">Name</label>
+                <input type="text" id="edit-name" class="w-full border p-2 rounded text-sm">
+            </div>
+            <div class="flex gap-2">
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Dosage</label>
+                    <input type="text" id="edit-dosage" class="w-full border p-2 rounded text-sm">
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Frequency</label>
+                    <input type="text" id="edit-freq" class="w-full border p-2 rounded text-sm">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Refill Date</label>
+                    <input type="date" id="edit-refill" class="w-full border p-2 rounded text-sm">
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Reminder</label>
+                    <input type="time" id="edit-reminder" class="w-full border p-2 rounded text-sm">
+                </div>
+            </div>
+            <button type="submit" class="w-full mt-4 px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 font-bold">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+{{!-- Delete Warning Modal --}}
 <div id="delete-warning-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg w-full max-w-sm m-4 border-l-4 border-red-500">
-        <h3 class="text-lg font-bold text-gray-900 mb-2">⚠️ Permanently Delete?</h3>
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl relative border-l-4 border-red-500">
+        <h3 class="font-bold text-lg text-gray-800 mb-2">⚠️ Permanently Delete?</h3>
         <p class="text-sm text-gray-500 mb-6">
             This will wipe this record <b>forever</b>. <br>
             If you just stopped taking it, click "Cancel" and use the <b>Archive (📥)</b> button instead.
         </p>
         <div class="flex justify-end gap-3">
-            <button onclick="document.getElementById('delete-warning-modal').classList.add('hidden')" class="px-4 py-2 border rounded hover:bg-gray-100">Cancel</button>
-            <button id="confirm-delete-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Yes, Delete</button>
+            <button onclick="document.getElementById('delete-warning-modal').classList.add('hidden')" class="px-4 py-2 border rounded text-sm hover:bg-gray-100">Cancel</button>
+            <button id="confirm-delete-btn" class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 font-bold">Yes, Delete</button>
         </div>
     </div>
 </div>
 
-{{!-- reminder alert --}}
-<div id="smart-toast" class="hidden fixed bottom-5 right-5 z-50 w-80 bg-white rounded-lg shadow-2xl border-l-4 overflow-hidden transition-all duration-500 transform translate-y-0">
-    <div class="p-4">
-        <div class="flex items-start gap-3">
-            <div id="toast-icon-bg" class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center">
-                <span id="toast-emoji" class="text-xl">🔔</span>
-            </div>
-            
-            <div class="flex-1 min-w-0">
-                <h3 id="toast-title" class="text-sm font-bold text-gray-900 leading-none">Alert</h3>
-                <p id="toast-message" class="mt-1 text-xs text-gray-500">Message goes here</p>
-                
-                <div class="mt-3 flex gap-2">
-                    <button id="toast-primary-btn" onclick="dismissToast()" class="text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors">
-                        OK
-                    </button>
-                    <button onclick="dismissToast()" class="bg-gray-100 text-gray-600 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors">
-                        Dismiss
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{!--Confetti--}}
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-{{!-- Appointment input modal --}}
-<div id="appt-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Add Appointment</h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="appt-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
-                </button>
-            </div>
-            <form class="p-4 md:p-5" id="add-appt-form">
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                    <div class="col-span-2">
-                        <label for="appt-title" class="block mb-2 text-sm font-medium text-gray-900">Title</label>
-                        <input type="text" id="appt-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Physical with Dr. Smith" required>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 col-span-2">
-                    <div>
-                        <label for="appt-date" class="block mb-2 text-sm font-medium text-gray-900">Date</label>
-                        <input type="date" id="appt-date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
-                    </div>
-                    <div>
-                        <label for="appt-time" class="block mb-2 text-sm font-medium text-gray-900">Time</label>
-                        <input type="time" id="appt-time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
-                    </div>
-                    </div>
-                    <div class="col-span-2">
-                        <label for="appt-type" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
-                        <select id="appt-type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                            <option value="Checkup">Checkup</option>
-                            <option value="Specialist">Specialist</option>
-                            <option value="Lab Work">Lab Work</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="col-span-2">
-                        <label for="appt-reason" class="block mb-2 text-sm font-medium text-gray-900">Reason (Optional)</label>
-                        <textarea id="appt-reason" rows="2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="text-white inline-flex items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    + Add Visit
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
-
-//Allergy 
+{{!-- Allergy form modal --}}
 <div id="allergy-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl">
-        <h3 class="font-bold text-lg mb-4 text-gray-800">Add New Allergy</h3>
+    <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-xl relative">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg text-gray-800">Add New Allergy</h3>
+            <button type="button" onclick="document.getElementById('allergy-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                ✕
+            </button>
+        </div>
+
         <form id="add-allergy-form" class="space-y-3">
-            
             <div>
                 <label class="block text-xs font-bold text-gray-500 mb-1">Allergen</label>
-                <input type="text" id="allergy-input" placeholder="e.g. Peanuts, Latex" class="w-full border p-2 rounded text-sm bg-gray-50" required>
+                <input type="text" id="allergy-input" placeholder="e.g. Peanuts, Latex" class="w-full border p-2 rounded text-sm" required>
             </div>
-
             <div>
                 <label class="block text-xs font-bold text-gray-500 mb-1">Reaction</label>
-                <input type="text" id="reaction-input" placeholder="e.g. Hives, Swelling" class="w-full border p-2 rounded text-sm bg-gray-50" required>
+                <input type="text" id="reaction-input" placeholder="e.g. Hives, Swelling" class="w-full border p-2 rounded text-sm" required>
             </div>
-
             <div>
                 <label class="block text-xs font-bold text-gray-500 mb-1">Severity</label>
-                <select id="severity-input" class="w-full border p-2 rounded text-sm bg-gray-50" required>
+                <select id="severity-input" class="w-full border p-2 rounded text-sm" required>
                     <option value="Mild">Mild</option>
                     <option value="Moderate">Moderate</option>
                     <option value="Severe">Severe</option>
                     <option value="Life-Threatening">Life-Threatening</option>
                 </select>
             </div>
-
-            <div class="flex justify-end gap-2 mt-6">
-                <button type="button" onclick="document.getElementById('allergy-modal').classList.add('hidden')" class="px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 rounded">Cancel</button>
-                <button type="submit" class="px-4 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 font-bold">Save Allergy</button>
-            </div>
+            <button type="submit" class="w-full mt-4 px-4 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 font-bold">
+                Save Allergy
+            </button>
         </form>
     </div>
 </div>
 
+{{!-- Reminder Toast --}}
+<div id="smart-toast" class="hidden fixed bottom-5 right-5 z-50 w-80 bg-white rounded-lg shadow-2xl border-l-4 overflow-hidden transition-all duration-500 transform translate-y-0">
+    <div class="p-4">
+        <div class="flex items-start gap-3">
+            <div id="toast-icon-bg" class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center">
+                <span id="toast-emoji" class="text-xl">🔔</span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <h3 id="toast-title" class="text-sm font-bold text-gray-900 leading-none">Alert</h3>
+                <p id="toast-message" class="mt-1 text-xs text-gray-500">Message goes here</p>
+                <div class="mt-3 flex gap-2">
+                    <button id="toast-primary-btn" onclick="dismissToast()" class="text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors">OK</button>
+                    <button onclick="dismissToast()" class="bg-gray-100 text-gray-600 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors">Dismiss</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Scripts --}}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const badges = document.querySelectorAll('.severity-badge');
@@ -481,5 +457,4 @@
         });
     });
 </script>
-
 <script src="/js/dashboard.js"></script>
